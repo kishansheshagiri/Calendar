@@ -11,21 +11,25 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = Calendar
 TEMPLATE = app
 
+VPATH   +=  data \
+            widget \
 
-SOURCES += Main.cpp\
-        CalendarMainWindow.cpp \
-    UiController.cpp \
-    DataController.cpp \
-    data/CalendarYear.cpp \
-    data/CalendarMonth.cpp \
-    data/CalendarWeek.cpp
+INCLUDEPATH = $$VPATH
 
-HEADERS  += CalendarMainWindow.h \
-    UiController.h \
-    Singleton.h \
-    DataController.h \
-    data/CalendarYear.h \
-    data/CalendarMonth.h \
-    data/CalendarWeek.h
+SOURCES +=  Main.cpp \
+            CalendarYear.cpp \
+            CalendarMonth.cpp \
+            CalendarWeek.cpp \
+            CalendarMainWindow.cpp \
+            DataController.cpp \
+            UiController.cpp \
 
-QMAKE_CXXFLAGS += -std=c++14 -pedantic-errors
+HEADERS +=  UiController.h \
+            Singleton.h \
+            DataController.h \
+            CalendarYear.h \
+            CalendarMonth.h \
+            CalendarWeek.h \
+            CalendarMainWindow.h \
+
+QMAKE_CXXFLAGS += -std=c++0x

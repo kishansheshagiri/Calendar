@@ -1,6 +1,6 @@
 #include "UiController.h"
 
-void UiController::onDataReady()
+void UiController::onDataChanged()
 {
 
 }
@@ -19,6 +19,6 @@ void UiController::setDataController(DataController *dataController)
 {
     m_dataController = dataController;
 
-    QObject::connect(dataController, &DataController::dataReady,
-                     this, &UiController::onDataReady);
+    QObject::connect(dataController, &DataController::dataChanged,
+                     this, &UiController::onDataChanged);
 }

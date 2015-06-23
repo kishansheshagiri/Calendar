@@ -11,7 +11,7 @@ class UiController : public QObject, public Singleton<UiController>
 {
     Q_OBJECT
 public slots:
-    void onDataReady();
+    void onDataChanged();
 
 public:
     UiController();

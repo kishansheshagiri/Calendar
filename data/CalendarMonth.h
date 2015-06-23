@@ -3,22 +3,25 @@
 
 #include "CalendarWeek.h"
 
+#include <memory>
 #include <QDate>
+#include <QList>
 
 class CalendarMonth
 {
 public:
     CalendarMonth();
-    CalendarMonth(int month, int year);
+    virtual ~CalendarMonth();
 
     void gotoNextMonth();
     void gotoPreviousMonth();
 private:
     void _createWeekObjects();
+    void _clearWeekObjects();
 
     QDate m_dateInfo;
     bool m_isCurrentMonth;
-    std::vector<CalendarWeek *> m_weekList;
+    QList<CalendarWeek *> m_weekList;
 };
 
 #endif // CALENDARMONTH_H

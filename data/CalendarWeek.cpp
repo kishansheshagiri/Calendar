@@ -1,6 +1,9 @@
 #include "CalendarWeek.h"
 
-CalendarWeek::CalendarWeek(std::initializer_list<int> days)
-    : m_days(days)
+#include <QDebug>
+
+CalendarWeek::CalendarWeek(QList<int> weekDays)
+    : m_days(weekDays)
 {
+    qDebug() << "Days: " << m_days;
 }

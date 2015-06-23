@@ -9,7 +9,7 @@ class DataController : public QObject, public Singleton<DataController>
 {
     Q_OBJECT
 signals:
-    void dataReady();
+    void dataChanged();
 public:
     DataController();
 

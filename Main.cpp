@@ -1,6 +1,6 @@
 #include "UiController.h"
 #include "DataController.h"
-#include "data/CalendarMonth.h"
+#include "CalendarMonth.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
