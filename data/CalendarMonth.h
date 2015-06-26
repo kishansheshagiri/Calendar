@@ -6,15 +6,30 @@
 #include <memory>
 #include <QDate>
 #include <QList>
+#include <QAbstractTableModel>
 
-class CalendarMonth
+class CalendarMonth : public QAbstractTableModel
 {
+    Q_OBJECT
 public:
     CalendarMonth();
-    virtual ~CalendarMonth();
+    ~CalendarMonth();
 
+    void initialize();
+    QString monthInfo();
+
+    int rowCount(const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE;
+    int columnCount(const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE;
+    QVariant data(const QModelIndex& index, int role) const Q_DECL_OVERRIDE;
+    QVariant headerData(int section, Qt::Orientation orientation = Qt::Horizontal, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
+
+Q_SIGNALS:
+    void monthChanged(CalendarMonth *model);
+
+public Q_SLOTS:
     void gotoNextMonth();
     void gotoPreviousMonth();
+
 private:
     void _createWeekObjects();
     void _clearWeekObjects();

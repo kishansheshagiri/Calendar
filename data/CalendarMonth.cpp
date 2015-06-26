@@ -1,17 +1,23 @@
 #include "CalendarMonth.h"
 
 #include <QDebug>
+#include <QColor>
 
 CalendarMonth::CalendarMonth()
-    : m_dateInfo(QDate::currentDate())
+    : QAbstractTableModel()
+    , m_dateInfo(QDate::currentDate())
     , m_isCurrentMonth(true)
 {
-    _createWeekObjects();
 }
 
 CalendarMonth::~CalendarMonth()
 {
     _clearWeekObjects();
+}
+
+void CalendarMonth::initialize()
+{
+    _createWeekObjects();
 }
 
 void CalendarMonth::gotoNextMonth()
@@ -28,6 +34,49 @@ void CalendarMonth::gotoPreviousMonth()
     _createWeekObjects();
 }
 
+QString CalendarMonth::monthInfo()
+{
+    return QDate::longMonthName(m_dateInfo.month()) + ", " + QString::number(m_dateInfo.year());
+}
+
+int CalendarMonth::rowCount(const QModelIndex& /*parent*/) const
+{
+    return m_weekList.length();
+}
+
+int CalendarMonth::columnCount(const QModelIndex& /*parent*/) const
+{
+    return 7;
+}
+
+QVariant CalendarMonth::data(const QModelIndex& index, int role) const
+{
+    if (!index.isValid())
+        return QVariant();
+
+    if (role == Qt::TextAlignmentRole)
+        return Qt::AlignCenter;
+    else if (role != Qt::DisplayRole)
+        return QVariant();
+
+    int date = m_weekList.at(index.row())->GetIndex(index.column());
+
+    return date == 0 ? QVariant() : QVariant(date);
+}
+
+QVariant CalendarMonth::headerData(int section, Qt::Orientation orientation, int role) const
+{
+    if (role == Qt::TextColorRole)
+        return QVariant(QColor("Red"));
+
+    if (orientation == Qt::Horizontal
+            && role == Qt::DisplayRole) {
+        return QVariant(QDate::shortDayName(section + 1));
+    }
+
+    return QVariant();
+}
+
 void CalendarMonth::_createWeekObjects()
 {
     int currentMonth = m_dateInfo.month();
@@ -37,16 +86,16 @@ void CalendarMonth::_createWeekObjects()
 
     QDate date(m_dateInfo);
 
-    while (date.month() == currentMonth) {
+    while (date.month() == currentMonth || m_weekList.size() < 6) {
         QList<int> list;
         for (int i = 1; i <= 7; i++) {
             if ((date.day() <= 7 && i < date.dayOfWeek())) {
-                list.push_back(0);
+                list << 0;
                 continue;
             } else if (date.month() == currentMonth) {
-                list.push_back(date.day());
+                list << date.day();
             } else {
-                list.push_back(0);
+                list << 0;
             }
 
             date = date.addDays(1);
@@ -54,16 +103,15 @@ void CalendarMonth::_createWeekObjects()
 
         m_weekList.append(new CalendarWeek(list));
     }
+
+    Q_EMIT monthChanged(this);
+    Q_EMIT layoutChanged();
 }
 
 void CalendarMonth::_clearWeekObjects()
 {
-    for (auto week : m_weekList) {
-        if (week != nullptr) {
-            delete week;
-            week = nullptr;
-        }
-    }
-
+    qDeleteAll(m_weekList);
     m_weekList.clear();
 }
+
+//#include "moc_CalendarMonth.h"

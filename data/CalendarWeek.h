@@ -6,8 +6,10 @@
 class CalendarWeek
 {
 public:
-    CalendarWeek() { }
     CalendarWeek(QList<int> weekDays);
+    ~CalendarWeek();
+
+    int GetIndex(int index);
 
 private:
     QList<int> m_days;

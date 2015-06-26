@@ -5,5 +5,13 @@
 CalendarWeek::CalendarWeek(QList<int> weekDays)
     : m_days(weekDays)
 {
-    qDebug() << "Days: " << m_days;
+}
+
+CalendarWeek::~CalendarWeek()
+{
+}
+
+int CalendarWeek::GetIndex(int index)
+{
+    return m_days.at(index);
 }

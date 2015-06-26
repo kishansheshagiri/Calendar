@@ -17,19 +17,21 @@ VPATH   +=  data \
 INCLUDEPATH = $$VPATH
 
 SOURCES +=  Main.cpp \
-            CalendarYear.cpp \
-            CalendarMonth.cpp \
-            CalendarWeek.cpp \
             CalendarMainWindow.cpp \
+            CalendarMonth.cpp \
+            CalendarView.cpp \
+            CalendarWeek.cpp \
+            CalendarYear.cpp \
             DataController.cpp \
-            UiController.cpp \
+            UiController.cpp
 
-HEADERS +=  UiController.h \
-            Singleton.h \
-            DataController.h \
-            CalendarYear.h \
+HEADERS +=  CalendarMainWindow.h \
             CalendarMonth.h \
+            CalendarView.h \
             CalendarWeek.h \
-            CalendarMainWindow.h \
+            CalendarYear.h \
+            DataController.h \
+            Singleton.h \
+            UiController.h
 
 QMAKE_CXXFLAGS += -std=c++0x

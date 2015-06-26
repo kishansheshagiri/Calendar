@@ -1,6 +1,6 @@
 #include "UiController.h"
 #include "DataController.h"
-#include "CalendarMonth.h"
+
 #include <QApplication>
 
 int main(int argc, char *argv[])
@@ -11,9 +11,8 @@ int main(int argc, char *argv[])
     UiController *uiController = UiController::Create();
 
     uiController->setDataController(dataController);
-    dataController->Start();
+    dataController->start();
 
-    CalendarMonth m;
     int success = a.exec();
 
     uiController->Destroy();
